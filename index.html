@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>❤️</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: 'Georgia', serif;
+  background: linear-gradient(135deg, #fdc5c5, #000000);
+  overflow: hidden;
+}
+
+/* CARD */
+.card {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 40px 30px;
+  border-radius: 20px;
+  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  text-align: center;
+  max-width: 420px;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  position: relative;
+  z-index: 10;
+}
+
+.card:hover {
+  transform: scale(1.03);
+}
+
+/* TEXT */
+h1 {
+  margin: 0 0 10px;
+  font-size: 26px;
+  color: #d6336c;
+}
+
+p {
+  margin: 0;
+  font-size: 16px;
+  color: #555;
+}
+
+/* MESSAGE */
+.message {
+  margin-top: 20px;
+  font-size: 18px;
+  color: #333;
+  height: 300px;
+  overflow-y: auto;
+  padding-right: 10px;
+  white-space: pre-wrap;
+  display: none;
+}
+
+/* SCROLLBAR */
+.message::-webkit-scrollbar {
+  width: 6px;
+}
+.message::-webkit-scrollbar-thumb {
+  background: #000000;
+  border-radius: 10px;
+}
+.message::-webkit-scrollbar-track {
+  background: #ffffff;
+}
+
+/* FLOATING HEARTS */
+.heart {
+  position: fixed;
+  bottom: -40px;
+  font-size: 24px;
+  color: rgba(255, 0, 80, 0.8);
+  animation: floatUp 6s linear forwards;
+  pointer-events: none;
+  z-index: 1;
+}
+
+@keyframes floatUp {
+  0% { transform: translateY(0); opacity: 0; }
+  10% { opacity: 1; }
+  100% { transform: translateY(-120vh); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="card" id="card">
+  <h1 id="title">Click Me 💕</h1>
+  <p id="subtitle">I made this just for you</p>
+  <div class="message" id="message"></div>
+</div>
+
+<audio id="bgMusic" src="music.mp3" loop></audio>
+
+<script>
+const card = document.getElementById('card');
+const messageEl = document.getElementById('message');
+const music = document.getElementById('bgMusic');
+
+const messageText = `Hi Baby ❤️
+
+Gusto ko lang huminto sandali at sabihin sa’yo kung gaano ako ka-thankful na nandito ka sa buhay ko. Hindi man ako palaging magaling magpahayag ng nararamdaman ko, pero sana maramdaman mo kung gaano kita ka-appreciate. Sa bawat maliit na bagay na ginagawa mo, sa paraan ng pag-aalaga mo, at sa presensya mo pa lang, sobrang laki na ng halaga mo sa’kin.
+
+Salamat sa pag-unawa sa’kin, lalo na sa mga panahong hindi ako okay at hirap akong magpaliwanag. Salamat sa patience mo kapag tahimik ako, kapag pagod ako, at kahit sa mga araw na pareho tayong nahihirapan. Hindi madali magmahal, pero pinili mo pa rin akong intindihin at hindi ko ‘yon tine-take for granted.
+
+Mahal kita sa isang tahimik pero buo na paraan. Hindi palaging maingay, hindi palaging perfect, pero totoo. Mahal kita hindi lang kapag masaya ang lahat, kundi lalo na kapag mahirap. Kapag may problema, mas pipiliin kong ayusin kesa iwan. Mas pipiliin kong manatili kesa sumuko.
+
+Gusto kong malaman mo na hinding-hindi kita lolokohin at hinding-hindi kita pagsisinungalingan. Hindi dahil kailangan kong sabihin, kundi dahil natural sa’kin ang maging tapat sa’yo. Mahal kita, at kasama sa pagmamahal na ‘yon ang respeto, honesty, at loyalty. Ayokong dumating yung panahon na pagdududahan mo ang sarili mo dahil sa’kin.
+
+Hindi ako perpekto, at may mga araw na nagkakamali rin ako, pero isang bagay ang malinaw sa puso ko hindi kita iiwan. Pipiliin kitang mahalin kahit may misunderstandings, kahit may takot, at kahit hindi natin alam ang lahat ng sagot ngayon.
+
+Ikaw yung pahinga ko. Ikaw yung tahanan ko sa mga araw na pagod ako. Kahit tahimik lang, pipiliin pa rin kitang mahalin at pahalagahan.
+
+Salamat sa pagiging ikaw.
+Mahal na mahal kita, palagi Janelle 🤍`;
+
+
+let clicked = false;
+
+card.addEventListener('click', () => {
+  if (clicked) return;
+  clicked = true;
+
+  document.getElementById('title').style.display = 'none';
+  document.getElementById('subtitle').style.display = 'none';
+
+  messageEl.style.display = 'block';
+  typeText(messageText, messageEl, 40);
+
+  music.volume = 0.6;
+  music.play().catch(() => {});
+
+  startHearts();
+});
+
+function typeText(text, element, speed) {
+  let i = 0;
+  element.textContent = '';
+  const interval = setInterval(() => {
+    element.textContent += text.charAt(i);
+    i++;
+    element.scrollTop = element.scrollHeight;
+    if (i >= text.length) clearInterval(interval);
+  }, speed);
+}
+
+function startHearts() {
+  setInterval(() => {
+    const heart = document.createElement('div');
+    heart.className = 'heart';
+    heart.textContent = '❤️';
+    heart.style.left = Math.random() * 100 + 'vw';
+    heart.style.fontSize = 18 + Math.random() * 20 + 'px';
+    document.body.appendChild(heart);
+    setTimeout(() => heart.remove(), 6000);
+  }, 300);
+}
+</script>
+
+</body>
+</html>
